@@ -18,7 +18,7 @@ final class WriteBatchTests: XCTestCase {
     override func tearDown() async throws {
         let snapshot = try await Firestore.firestore().collection("test_batch")
             .getDocuments()
-        let batch = Firestore.firestore().batch()
+        let batch = try Firestore.firestore().batch()
         snapshot.documents.forEach { snapshot in
             batch.deleteDocument(document: snapshot.documentReference)
         }
@@ -40,7 +40,7 @@ final class WriteBatchTests: XCTestCase {
     }
 
     func testCreateWriteBatch() async throws {
-        let firestore = Firestore.firestore()
+        let firestore = try Firestore.firestore()
         let batch = firestore.batch()
         (0..<5).forEach { index in
             let ref = firestore.collection("test_batch").document("batch_create_\(index)")
@@ -56,7 +56,7 @@ final class WriteBatchTests: XCTestCase {
     }
 
     func testSetDataWriteBatch() async throws {
-        let firestore = Firestore.firestore()
+        let firestore = try Firestore.firestore()
         let createBatch = firestore.batch()
         (0..<5).forEach { index in
             let ref = firestore.collection("test_batch").document("batch_setData_\(index)")
@@ -79,7 +79,7 @@ final class WriteBatchTests: XCTestCase {
     }
 
     func testSetDataMergeWriteBatch() async throws {
-        let firestore = Firestore.firestore()
+        let firestore = try Firestore.firestore()
         let createBatch = firestore.batch()
         (0..<5).forEach { index in
             let ref = firestore.collection("test_batch").document("batch_setDataMerge_\(index)")
@@ -102,7 +102,7 @@ final class WriteBatchTests: XCTestCase {
     }
 
     func testUpdateWriteBatch() async throws {
-        let firestore = Firestore.firestore()
+        let firestore = try Firestore.firestore()
         let createBatch = firestore.batch()
         (0..<5).forEach { index in
             let ref = firestore.collection("test_batch").document("batch_update_\(index)")
@@ -125,7 +125,7 @@ final class WriteBatchTests: XCTestCase {
     }
 
     func testDeleteWriteBatch() async throws {
-        let firestore = Firestore.firestore()
+        let firestore = try Firestore.firestore()
         let createBatch = firestore.batch()
         (0..<5).forEach { index in
             let ref = firestore.collection("test_batch").document("batch_\(index)")
@@ -146,7 +146,7 @@ final class WriteBatchTests: XCTestCase {
     }
 
     func testLimitMaxWriteBatch() async throws {
-        let firestore = Firestore.firestore()
+        let firestore = try Firestore.firestore()
         let createBatch = firestore.batch()
         (0..<501).forEach { index in
             let ref = firestore.collection("test_batch").document("batch_limit_\(index)")
@@ -161,7 +161,7 @@ final class WriteBatchTests: XCTestCase {
     }
 
     func testFieldValueWriteBatch() async throws {
-        let firestore = Firestore.firestore()
+        let firestore = try Firestore.firestore()
         let createBatch = firestore.batch()
         (0..<5).forEach { index in
             let timestamp = FieldValue.serverTimestamp
@@ -179,7 +179,7 @@ final class WriteBatchTests: XCTestCase {
     }
 
     func testLimitMaxWithFieldValueWriteBatch() async throws {
-        let firestore = Firestore.firestore()
+        let firestore = try Firestore.firestore()
         let createBatch = firestore.batch()
         (0..<501).forEach { index in
             let timestamp = FieldValue.serverTimestamp

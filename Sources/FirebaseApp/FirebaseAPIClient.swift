@@ -72,15 +72,15 @@ public class FirebaseAPIClient: Sendable {
         throw NSError(domain: "FirebaseAPIClient", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse response"])
     }
     
-    public func makeAuthenticatedPost<T: Codable>(endpoint: String, body: (any Codable)? = nil) async throws -> T {
+    nonisolated public func makeAuthenticatedPost<T: Codable>(endpoint: String, body: (any Codable)? = nil) async throws -> T {
         let token = try await getOAuthToken()
+        
         var request = try HTTPClient.Request(url: endpoint, method: .POST)
         request.headers.add(name: "Content-Type", value: "application/json")
         request.headers.add(name: "Authorization", value: "Bearer \(token.access_token)")
         if let body = body {
             request.body = .data(try JSONEncoder().encode(body))
         }
-        
         let response = try await httpClient.execute(request: request).get()
         guard var byteBuffer = response.body else {
             throw FirebaseAPIError.missingResponseBody
@@ -93,7 +93,7 @@ public class FirebaseAPIClient: Sendable {
         return try decoder.decode(T.self, from: responseData)
     }
     
-    public func makeAuthenticatedPost(endpoint: String, body: (any Encodable)? = nil) async throws -> Data {
+    nonisolated public func makeAuthenticatedPost(endpoint: String, body: (any Encodable)? = nil) async throws -> Data {
         let token = try await getOAuthToken()
         var request = try HTTPClient.Request(url: endpoint, method: .POST)
         request.headers.add(name: "Content-Type", value: "application/json")

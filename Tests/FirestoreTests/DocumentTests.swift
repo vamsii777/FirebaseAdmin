@@ -52,7 +52,7 @@ final class DocumentTests: XCTestCase {
     }
 
     func testServerTimestamp() async throws {
-        let ref = Firestore
+        let ref = try Firestore
             .firestore()
             .collection("test")
             .document("serverTimestamp")
@@ -76,7 +76,7 @@ final class DocumentTests: XCTestCase {
             var value: Date
         }
 
-        let ref = Firestore
+        let ref = try Firestore
             .firestore()
             .collection("test")
             .document("testConvertTimestampToDate")
@@ -98,7 +98,7 @@ final class DocumentTests: XCTestCase {
             var value: Double = 0
         }
 
-        let ref = Firestore
+        let ref = try Firestore
             .firestore()
             .collection("test")
             .document("testConvertIntToDouble")
@@ -118,7 +118,7 @@ final class DocumentTests: XCTestCase {
             var date: Date = Date(timeIntervalSince1970: 0)
             var timestamp: Timestamp = Timestamp(seconds: 0, nanos: 0)
             var geoPoint: GeoPoint = GeoPoint(latitude: 0, longitude: 0)
-            var reference: DocumentReference = Firestore.firestore().document("documents/id")
+            var reference: DocumentReference = try Firestore.firestore().document("documents/id")
         }
 
         struct NestObject: Codable, Equatable {
@@ -130,7 +130,7 @@ final class DocumentTests: XCTestCase {
             var date: Date = Date(timeIntervalSince1970: 0)
             var timestamp: Timestamp = Timestamp(seconds: 0, nanos: 0)
             var geoPoint: GeoPoint = GeoPoint(latitude: 0, longitude: 0)
-            var reference: DocumentReference = Firestore.firestore().document("documents/id")
+            var reference: DocumentReference = try Firestore.firestore().document("documents/id")
             var nested: DeepNestObject = DeepNestObject()
         }
 
@@ -143,7 +143,7 @@ final class DocumentTests: XCTestCase {
             var date: Date = Date(timeIntervalSince1970: 0)
             var timestamp: Timestamp = Timestamp(seconds: 0, nanos: 0)
             var geoPoint: GeoPoint = GeoPoint(latitude: 0, longitude: 0)
-            var reference: DocumentReference = Firestore.firestore().document("documents/id")
+            var reference: DocumentReference = try Firestore.firestore().document("documents/id")
             var nested: NestObject = NestObject()
         }
         
@@ -156,7 +156,7 @@ final class DocumentTests: XCTestCase {
             date: Date(timeIntervalSince1970: 0),
             timestamp: Timestamp(seconds: 0, nanos: 0),
             geoPoint: GeoPoint(latitude: 0, longitude: 0),
-            reference: Firestore.firestore().document("documents/id"),
+            reference: try Firestore.firestore().document("documents/id"),
             nested: .init(
                 number: 0,
                 string: "string",
@@ -166,7 +166,7 @@ final class DocumentTests: XCTestCase {
                 date: Date(timeIntervalSince1970: 0),
                 timestamp: Timestamp(seconds: 0, nanos: 0),
                 geoPoint: GeoPoint(latitude: 0, longitude: 0),
-                reference: Firestore.firestore().document("documents/id"),
+                reference: try Firestore.firestore().document("documents/id"),
                 nested: .init(
                     number: 0,
                     string: "string",
@@ -176,12 +176,12 @@ final class DocumentTests: XCTestCase {
                     date: Date(timeIntervalSince1970: 0),
                     timestamp: Timestamp(seconds: 0, nanos: 0),
                     geoPoint: GeoPoint(latitude: 0, longitude: 0),
-                    reference: Firestore.firestore().document("documents/id")
+                    reference: try Firestore.firestore().document("documents/id")
                 )
             )
         )
 
-        let ref = Firestore
+        let ref = try Firestore
             .firestore()
             .collection("test")
             .document("roundtrip")

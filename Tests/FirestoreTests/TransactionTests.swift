@@ -30,7 +30,7 @@ final class TransactionTests: XCTestCase {
     }
 
     func testIncrement() async throws {
-        let firestore = Firestore.firestore()
+        let firestore = try Firestore.firestore()
         let ref = firestore.collection("test").document("transaction")
         try await ref.delete()
 
@@ -59,7 +59,7 @@ final class TransactionTests: XCTestCase {
     }
 
     func testMultiIncrement() async throws {
-        let firestore = Firestore.firestore()
+        let firestore = try Firestore.firestore()
         let ref0 = firestore.collection("test").document("transaction0")
         let ref1 = firestore.collection("test").document("transaction1")
         try await ref0.delete()

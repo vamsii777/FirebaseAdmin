@@ -11,11 +11,11 @@ final class WhereQueryTests: XCTestCase {
     let path = "test/where/items"
 
     override func setUp() async throws {
-        let ref = Firestore.firestore().collection(path)
+        let ref = try Firestore.firestore().collection(path)
         func isEven(_ number: Int) -> Bool {
             return number % 2 == 0
         }
-        let batch = Firestore.firestore().batch()
+        let batch = try Firestore.firestore().batch()
         (1...10).forEach { index in
             batch.setData(data: [
                 "index": index,
@@ -26,7 +26,7 @@ final class WhereQueryTests: XCTestCase {
     }
 
     override func tearDown() async throws {
-        let firestore = Firestore.firestore()
+        let firestore = try Firestore.firestore()
         let collection = firestore.collection(path)
         let snapshot = try await collection.getDocuments()
         for document in snapshot.documents {
@@ -49,7 +49,7 @@ final class WhereQueryTests: XCTestCase {
     }
 
     func testWhereQueryIsEqualTo() async throws {
-        let ref = Firestore.firestore().collection(path)
+        let ref = try Firestore.firestore().collection(path)
         do {
             let snapshot = try await ref.getDocuments()
             XCTAssertEqual(snapshot.documents.count, 10)
@@ -66,7 +66,7 @@ final class WhereQueryTests: XCTestCase {
     }
 
     func testWhereQueryIsNotEqualTo() async throws {
-        let ref = Firestore.firestore().collection(path)
+        let ref = try Firestore.firestore().collection(path)
         do {
             let snapshot = try await ref.getDocuments()
             XCTAssertEqual(snapshot.documents.count, 10)
@@ -100,7 +100,7 @@ final class WhereQueryTests: XCTestCase {
     }
 
     func testWhereQueryIsLessThanOrEqualTo() async throws {
-        let ref = Firestore.firestore().collection(path)
+        let ref = try Firestore.firestore().collection(path)
         do {
             let snapshot = try await ref.getDocuments()
             XCTAssertEqual(snapshot.documents.count, 10)
@@ -117,7 +117,7 @@ final class WhereQueryTests: XCTestCase {
     }
 
     func testWhereQueryIsGreaterThan() async throws {
-        let ref = Firestore.firestore().collection(path)
+        let ref = try Firestore.firestore().collection(path)
         do {
             let snapshot = try await ref.getDocuments()
             XCTAssertEqual(snapshot.documents.count, 10)
@@ -134,7 +134,7 @@ final class WhereQueryTests: XCTestCase {
     }
 
     func testWhereQueryIsGreaterThanOrEqualTo() async throws {
-        let ref = Firestore.firestore().collection(path)
+        let ref = try Firestore.firestore().collection(path)
         do {
             let snapshot = try await ref.getDocuments()
             XCTAssertEqual(snapshot.documents.count, 10)
@@ -151,7 +151,7 @@ final class WhereQueryTests: XCTestCase {
     }
 
     func testWhereQueryIn() async throws {
-        let ref = Firestore.firestore().collection(path)
+        let ref = try Firestore.firestore().collection(path)
         do {
             let snapshot = try await ref.getDocuments()
             XCTAssertEqual(snapshot.documents.count, 10)
@@ -168,7 +168,7 @@ final class WhereQueryTests: XCTestCase {
     }
 
     func testWhereQueryNotIn() async throws {
-        let ref = Firestore.firestore().collection(path)
+        let ref = try Firestore.firestore().collection(path)
         do {
             let snapshot = try await ref.getDocuments()
             XCTAssertEqual(snapshot.documents.count, 10)

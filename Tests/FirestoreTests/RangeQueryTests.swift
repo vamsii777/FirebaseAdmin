@@ -16,8 +16,8 @@ final class RangeQueryTests: XCTestCase {
     }
 
     override func setUp() async throws {
-        let ref = Firestore.firestore().collection(path)
-        let batch = Firestore.firestore().batch()
+        let ref = try Firestore.firestore().collection(path)
+        let batch = try Firestore.firestore().batch()
         let item0 = CalendarItem(
             startTime: .init(year: 2023, month: 4, day: 12),
             endTime: .init(year: 2023, month: 4, day: 14)
@@ -48,7 +48,7 @@ final class RangeQueryTests: XCTestCase {
     }
 
     override func tearDown() async throws {
-        let firestore = Firestore.firestore()
+        let firestore = try Firestore.firestore()
         let collection = firestore.collection(path)
         let snapshot = try await collection.getDocuments()
         for document in snapshot.documents {
@@ -71,7 +71,7 @@ final class RangeQueryTests: XCTestCase {
     }
 
     func testWhereQueryIsEqualTo() async throws {
-        let ref = Firestore.firestore().collection(path)
+        let ref = try Firestore.firestore().collection(path)
         do {
             let snapshot = try await ref
                 .where(field: "startTime", isEqualTo: Timestamp(year: 2023, month: 4, day: 12))
@@ -81,7 +81,7 @@ final class RangeQueryTests: XCTestCase {
     }
 
     func testWhereQueryIsNotEqualTo() async throws {
-        let ref = Firestore.firestore().collection(path)
+        let ref = try Firestore.firestore().collection(path)
         do {
             let snapshot = try await ref
                 .where(field: "startTime", isNotEqualTo: Timestamp(year: 2023, month: 4, day: 12))
@@ -91,7 +91,7 @@ final class RangeQueryTests: XCTestCase {
     }
 
     func testWhereQueryIsLessThan() async throws {
-        let ref = Firestore.firestore().collection(path)
+        let ref = try Firestore.firestore().collection(path)
         do {
             let snapshot = try await ref
                 .where(field: "startTime", isLessThan: Timestamp(year: 2023, month: 4, day: 14))
@@ -101,7 +101,7 @@ final class RangeQueryTests: XCTestCase {
     }
 
     func testWhereQueryIsLessThanOrEqualTo() async throws {
-        let ref = Firestore.firestore().collection(path)
+        let ref = try Firestore.firestore().collection(path)
         do {
             let snapshot = try await ref
                 .where(field: "startTime", isLessThanOrEqualTo: Timestamp(year: 2023, month: 4, day: 14))
@@ -111,7 +111,7 @@ final class RangeQueryTests: XCTestCase {
     }
 
     func testWhereQueryIsGreaterThan() async throws {
-        let ref = Firestore.firestore().collection(path)
+        let ref = try Firestore.firestore().collection(path)
         do {
             let snapshot = try await ref
                 .where(field: "startTime", isGreaterThan: Timestamp(year: 2023, month: 4, day: 13))
@@ -121,7 +121,7 @@ final class RangeQueryTests: XCTestCase {
     }
 
     func testWhereQueryIsGreaterThanOrEqualTo() async throws {
-        let ref = Firestore.firestore().collection(path)
+        let ref = try Firestore.firestore().collection(path)
         do {
             let snapshot = try await ref
                 .where(field: "startTime", isGreaterThanOrEqualTo: Timestamp(year: 2023, month: 4, day: 13))
@@ -131,7 +131,7 @@ final class RangeQueryTests: XCTestCase {
     }
 
     func testWhereQueryIn() async throws {
-        let ref = Firestore.firestore().collection(path)
+        let ref = try Firestore.firestore().collection(path)
         do {
             let snapshot = try await ref
                 .where(field: "startTime", in: [Timestamp(year: 2023, month: 4, day: 12), Timestamp(year: 2023, month: 4, day: 13)])
@@ -141,7 +141,7 @@ final class RangeQueryTests: XCTestCase {
     }
 
     func testWhereQueryNotIn() async throws {
-        let ref = Firestore.firestore().collection(path)
+        let ref = try Firestore.firestore().collection(path)
         do {
             let snapshot = try await ref
                 .where(field: "startTime", notIn: [Timestamp(year: 2023, month: 4, day: 12), Timestamp(year: 2023, month: 4, day: 13)])
@@ -151,7 +151,7 @@ final class RangeQueryTests: XCTestCase {
     }
 
     func testWhereQueryAndGreaterThanOrEqualToLessThan() async throws {
-        let ref = Firestore.firestore().collection(path)
+        let ref = try Firestore.firestore().collection(path)
         do {
             let snapshot = try await ref
                 .and([
@@ -164,7 +164,7 @@ final class RangeQueryTests: XCTestCase {
     }
 
     func testWhereQueryAndGreaterThanOrEqualToLessThanOrEqualTo() async throws {
-        let ref = Firestore.firestore().collection(path)
+        let ref = try Firestore.firestore().collection(path)
         do {
             let snapshot = try await ref
                 .and([
@@ -177,7 +177,7 @@ final class RangeQueryTests: XCTestCase {
     }
 
     func testWhereQueryOrAndGreaterThanOrEqualToLessThan() async throws {
-        let ref = Firestore.firestore().collection(path)
+        let ref = try Firestore.firestore().collection(path)
         do {
             let snapshot = try await ref
                 .or([
@@ -196,7 +196,7 @@ final class RangeQueryTests: XCTestCase {
     }
 
     func testWhereQueryOrAndGreaterThanOrEqualToLessThanOrEqualToo() async throws {
-        let ref = Firestore.firestore().collection(path)
+        let ref = try Firestore.firestore().collection(path)
         do {
             let snapshot = try await ref
                 .or([

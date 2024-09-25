@@ -23,13 +23,13 @@ final class FirestoreTests: XCTestCase {
     }
 
     func testPath() async throws {
-        XCTAssertEqual(Firestore.firestore().collection("test").document("0").path, "test/0")
-        XCTAssertEqual(Firestore.firestore().collection("test").document("0").path, "test/0")
-        XCTAssertEqual(Firestore.firestore().collection("test").document("0/test/0").path, "test/0/test/0")
-        XCTAssertEqual(Firestore.firestore().document("/test/0").path, "test/0")
-        XCTAssertEqual(Firestore.firestore().document("/test/0").collection("test").path, "test/0/test")
-        XCTAssertEqual(Firestore.firestore().document("/test/0").collection("test").document("0").path, "test/0/test/0")
-        XCTAssertEqual(Firestore.firestore().document("/test/0").parent.path, "test")
-        XCTAssertEqual(Firestore.firestore().document("/test/0").parent.path, "test")
+        XCTAssertEqual(try Firestore.firestore().collection("test").document("0").path, "test/0")
+        XCTAssertEqual(try Firestore.firestore().collection("test").document("0").path, "test/0")
+        XCTAssertEqual(try Firestore.firestore().collection("test").document("0/test/0").path, "test/0/test/0")
+        XCTAssertEqual(try Firestore.firestore().document("/test/0").path, "test/0")
+        XCTAssertEqual(try Firestore.firestore().document("/test/0").collection("test").path, "test/0/test")
+        XCTAssertEqual(try Firestore.firestore().document("/test/0").collection("test").document("0").path, "test/0/test/0")
+        XCTAssertEqual(try Firestore.firestore().document("/test/0").parent.path, "test")
+        XCTAssertEqual(try Firestore.firestore().document("/test/0").parent.path, "test")
     }
 }
